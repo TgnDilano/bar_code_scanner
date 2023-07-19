@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "461680106941",
+    "project_id": "tpe-scanner",
+    "storage_bucket": "tpe-scanner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461680106941:android:433694c98fc153963c86d4",
+        "android_client_info": {
+          "package_name": "com.example.bar_code_scanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "461680106941-i97n642lgjrjk7pcbp32ajndo7iem09b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM6VRaT34uHx7PPKQBcDIeXXwkyiIUE14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461680106941-i97n642lgjrjk7pcbp32ajndo7iem09b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "461680106941-7o4shadb4j0tinus4v5efcb46pan6rid.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.barCodeScanner"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
