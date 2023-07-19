@@ -11,9 +11,9 @@ void main() async {
   runApp( GetMaterialApp(
     initialRoute: '/',
     routes: {
-      '/' : (context) => const Home(),
-      '/add' : (context) => const AddTpe(),
-      '/remove' : (context) => const RemoveTpe()
+      '/' : (context) => Home(),
+      '/add' : (context) => AddTpe(),
+      '/remove' : (context) => RemoveTpe()
     },
   ));
 }
