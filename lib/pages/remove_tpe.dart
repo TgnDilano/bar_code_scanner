@@ -20,19 +20,14 @@ class _RemoveTpeState extends State<RemoveTpe> {
           ),
         ),
       ),
-      body: Form(
-        child: Column(children: [
-          TextFormField(
-            decoration:InputDecoration(
-              labelText: 'nom',
-              hintText: 'entrer votre nom',
-            )
-          )
-        ],)
-        
-
+      body: const Column(
+        children: [
+          Text(
+            'Enter your name',
+          ),
+          TextField()
+        ],
         )
-
       );
   
     
