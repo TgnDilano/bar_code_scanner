@@ -11,8 +11,12 @@ class _RemoveTpeState extends State<RemoveTpe> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text('remove tpe screen'),
+      body: Text('remove Tpe'),
+
+      );
+  
     );
+    
   }
 }
 

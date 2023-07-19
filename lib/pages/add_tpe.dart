@@ -17,7 +17,7 @@ class _AddTpeState extends State<AddTpe> {
   // to add collection i first create a collection reference
  CollectionReference Stock = FirebaseFirestore.instance.collection('Stock');
 
-  // //creating the scan Barcode Function
+   //creating the scan Barcode Function
   String  _scanBarcodeResult = " ";
   Future<void> scanBarcode() async {
     String Result;
