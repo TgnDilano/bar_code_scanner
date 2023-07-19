@@ -12,7 +12,7 @@ class _RemoveTpeState extends State<RemoveTpe> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green.shade400,
+        backgroundColor: Colors.red,
         title: const Text(
           'remove TPE',
           style: TextStyle(
