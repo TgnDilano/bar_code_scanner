@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class AddTpe extends StatefulWidget {
   const AddTpe({super.key});
@@ -19,6 +20,7 @@ class _AddTpeState extends State<AddTpe> {
 
   // //creating the scan Barcode Function
   String  _scanBarcodeResult = " ";
+  String _scanBarcodeResult2 = " ";
   Future<void> scanBarcode() async {
     String Result;
     try{
@@ -32,9 +34,19 @@ class _AddTpeState extends State<AddTpe> {
     } on PlatformException{
      Result = 'failed to find platformed version';
     }
+    String Result2;
+    Result2 = await FlutterBarcodeScanner.scanBarcode(
+        '#ff6666',
+        'Cancel',
+        true,
+        ScanMode.BARCODE
+    );
+    debugPrint(Result2);
     if(!mounted) return;
     setState(() {
       _scanBarcodeResult = Result;
+      _scanBarcodeResult2 = Result2;
+
     });
   }
   @override
@@ -51,45 +63,64 @@ class _AddTpeState extends State<AddTpe> {
       ),
       body: Container(
         width: double.infinity,
-        height: MediaQuery.of(context).size.height,
+        // height: MediaQuery.of(context).size.height,
         padding:const EdgeInsets.symmetric(horizontal: 30,vertical: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(' $_scanBarcodeResult'),
-            ElevatedButton.icon(
-                onPressed: scanBarcode,
-                icon: const  Icon(Icons.camera_alt),
-                label: const Text(
-                    'Scan Bar Code',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,fontSize: 22,
-                  ),
-                )
+            Container(
+              height: MediaQuery.of(context).size.height/3,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(image: AssetImage('assets/illustration.png'))
+              ),
             ),
+            Text( _scanBarcodeResult),
+            Text(_scanBarcodeResult2),
+            // ElevatedButton.icon(
+            //     onPressed: scanBarcode,
+            //     icon: const  Icon(Icons.camera_alt),
+            //     label: const Text(
+            //         'Scan Bar Code',
+            //       style: TextStyle(
+            //           fontWeight: FontWeight.w600,fontSize: 22,
+            //       ),
+            //     )
+            // ),
             const SizedBox(height: 30,),
             MaterialButton(
-              minWidth: double.infinity,
-              height:70,
+              padding:const EdgeInsets.only(left: 45, top: 5, right: 45, bottom: 5),
+              height:30,
               onPressed: () async {
-                if(_scanBarcodeResult == " "){
+                if(_scanBarcodeResult == " " && _scanBarcodeResult2 == " "){
                 ScaffoldMessenger.of(context).showSnackBar(error);
-                } else{
-                  await Stock.add({ 'IMEI':_scanBarcodeResult }).then((value) =>  ScaffoldMessenger.of(context).showSnackBar(success));
+                }
+                else{
+                  await Stock.add({ 'Top IMEI':_scanBarcodeResult, 'Bottom IMEI':_scanBarcodeResult2 }).then((value) =>  ScaffoldMessenger.of(context).showSnackBar(success));
+
                 }
               },
-              color: Colors.green[600],
+              color: Colors.white,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40)
+                  borderRadius: BorderRadius.circular(40),
+                  side: const BorderSide(color: Colors.green,width: 2)
               ),
-              child: const Text("Add TPE",style: TextStyle(
-                  fontWeight: FontWeight.w600,fontSize: 22,color: Colors.white70
+              child: const Text("Add ",style: TextStyle(
+                  fontWeight: FontWeight.w600,fontSize: 22,color: Colors.green
               ),
               ),
             ),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: scanBarcode,
+        icon: const  Icon(Icons.camera_alt),
+        label:  const Text('Scan'),
+        backgroundColor: Colors.green,
+
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
     );
   }
 }
