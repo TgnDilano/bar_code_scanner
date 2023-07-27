@@ -48,7 +48,7 @@ class _HistoryState extends State<History> {
                     return Container(
                       margin: const EdgeInsets.only(bottom: 5),
                       padding: const EdgeInsets.all(20),
-                      height: 170,
+                      height: 210,
                       color: Colors.white,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,9 +95,22 @@ class _HistoryState extends State<History> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('IMEI', style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(' Top IMEI', style: TextStyle(fontWeight: FontWeight.bold)),
                               Text(
-                                document['IMEI'],
+                                document['Top IMEI'],
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w400
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 21,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(' Bottom IMEI', style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(
+                                document['Bottom IMEI'],
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w400
                                 ),

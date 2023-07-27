@@ -14,9 +14,34 @@ class AddTpe extends StatefulWidget {
 class _AddTpeState extends State<AddTpe> {
   var success = const  SnackBar(content: Text('TPE added successfully'));
   var error = const  SnackBar(content: Text('please scan the Bar code '));
+  var exist = const SnackBar(content: Text('Sorry, but this device exist already please Add a new device'));
 
   // to add collection i first create a collection reference
  CollectionReference Stock = FirebaseFirestore.instance.collection('Stock');
+
+
+ // this function check if the device exist , ifNotExist it add a new device to stock
+ AddTpe() async {
+final QuerySnapshot rs;
+   rs = await FirebaseFirestore.instance.collection('Stock').where('Top IMEI', isEqualTo: _scanBarcodeResult).get();
+final List < DocumentSnapshot > documents = rs.docs;
+if(_scanBarcodeResult == " " && _scanBarcodeResult2 == " "){
+  ScaffoldMessenger.of(context).showSnackBar(error);
+}
+if( documents.isEmpty){
+  setState(() async {
+    await Stock.add({ 'Top IMEI':_scanBarcodeResult, 'Bottom IMEI':_scanBarcodeResult2 })
+        .then((value) =>  ScaffoldMessenger.of(context).showSnackBar(success));
+
+
+  });
+
+} else {
+  ScaffoldMessenger.of(context).showSnackBar(exist);
+
+}
+ }
+
 
   // //creating the scan Barcode Function
   String  _scanBarcodeResult = " ";
@@ -90,15 +115,7 @@ class _AddTpeState extends State<AddTpe> {
             MaterialButton(
               padding:const EdgeInsets.only(left: 45, top: 5, right: 45, bottom: 5),
               height:30,
-              onPressed: () async {
-                if(_scanBarcodeResult == " " && _scanBarcodeResult2 == " "){
-                ScaffoldMessenger.of(context).showSnackBar(error);
-                }
-                else{
-                  await Stock.add({ 'Top IMEI':_scanBarcodeResult, 'Bottom IMEI':_scanBarcodeResult2 }).then((value) =>  ScaffoldMessenger.of(context).showSnackBar(success));
-
-                }
-              },
+              onPressed : AddTpe,
               color: Colors.white,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40),
