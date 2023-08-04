@@ -24,10 +24,9 @@ class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: Colors.lightGreen,
       appBar: AppBar(
         title: const Text("History"),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.green.shade500,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _streamWithdrawal,
@@ -48,8 +47,8 @@ class _HistoryState extends State<History> {
                     return Container(
                       margin: const EdgeInsets.only(bottom: 5),
                       padding: const EdgeInsets.all(20),
-                      height: 210,
-                      color: Colors.white,
+                      height: MediaQuery.of(context).size.height,
+                      color: Colors.white70,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -95,9 +94,23 @@ class _HistoryState extends State<History> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(' Top IMEI', style: TextStyle(fontWeight: FontWeight.bold)),
+                              const  Text('Duration:', style: TextStyle(
+                                  fontWeight: FontWeight.bold)),
                               Text(
-                                document['Top IMEI'],
+                                document['Duration'].toString(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w400
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 21,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('SN', style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(
+                                document['SN'],
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w400
                                 ),
@@ -108,15 +121,16 @@ class _HistoryState extends State<History> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(' Bottom IMEI', style: TextStyle(fontWeight: FontWeight.bold)),
+                              const   Text('Transaction made By ;', style: TextStyle(
+                                  fontWeight: FontWeight.bold)),
                               Text(
-                                document['Bottom IMEI'],
+                                document['sellers'].toString(),
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w400
                                 ),
-                              )
+                              ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ) ;
