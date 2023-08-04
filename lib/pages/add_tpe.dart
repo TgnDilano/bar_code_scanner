@@ -11,19 +11,13 @@ class AddTpe extends StatefulWidget {
 }
 
 class _AddTpeState extends State<AddTpe> {
-   bool _iconBool = false;
-
-  IconData _iconCamera = Icons.camera_alt;
-  IconData _iconDelete = Icons.delete;
-
-
 
 
   var success = const  SnackBar(content: Text('TPE added successfully'));
   var error = const  SnackBar(content: Text('please scan the Bar code '));
   var exist = const SnackBar(content: Text('Sorry, but this device exist already please Add a new device'));
 
-  // to add collection i first create a collection reference
+  //to add collection i first create a collection reference
  CollectionReference Stock = FirebaseFirestore.instance.collection('Stock');
 
 
@@ -37,8 +31,9 @@ if(_scanBarcodeResult == " "){
 }
 if( documents.isEmpty){
   setState(() async {
-    await Stock.add({ 'SN':_scanBarcodeResult, })
+    await Stock.add({ 'SN':_scanBarcodeResult, 'Done': Timestamp.now() })
         .then((value) =>  ScaffoldMessenger.of(context).showSnackBar(success));
+    _scanBarcodeResult = "";
   });
 
 } else {
@@ -46,7 +41,7 @@ if( documents.isEmpty){
 }
  }
 
-  // //creating the scan Barcode Function
+  //creating the scan Barcode Function
   String  _scanBarcodeResult = " ";
   Future<void> scanBarcode() async {
     String Result;
@@ -115,16 +110,16 @@ if( documents.isEmpty){
                       children: [
                         IconButton(
                             onPressed: scanBarcode,
-                            icon: Icon(_iconBool ? _iconDelete: _iconCamera,)
+                            icon: Icon(Icons.camera_alt)
                         ),
-                        // IconButton(
-                        //     onPressed: (){
-                        //       setState(() {
-                        //         _scanBarcodeResult = " ";
-                        //       });
-                        //     },
-                        //     icon: Icon(_iconBool ? _iconCamera : _iconDelete,)
-                        // ),
+                        IconButton(
+                            onPressed: (){
+                              setState(() {
+                                _scanBarcodeResult = " ";
+                              });
+                            },
+                            icon: Icon(Icons.delete, color: Colors.red,)
+                        ),
                       ],
                     )
                   ],

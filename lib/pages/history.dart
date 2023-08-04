@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 
 
@@ -24,10 +25,6 @@ class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar: AppBar(
-        title: const Text("History"),
-        backgroundColor: Colors.green.shade500,
-      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _streamWithdrawal,
         builder: (BuildContext context,AsyncSnapshot snapshot){
@@ -44,94 +41,104 @@ class _HistoryState extends State<History> {
                 itemCount:listQueryDocumentSnapshots.length ,
                   itemBuilder:(context, index){
                     QueryDocumentSnapshot document = listQueryDocumentSnapshots[index];
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 5),
-                      padding: const EdgeInsets.all(20),
-                      height: MediaQuery.of(context).size.height,
-                      color: Colors.white70,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Client Name:', style: TextStyle(fontWeight: FontWeight.bold),),
-                              Text(
-                                document['client Name'],
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 21,),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children:[
-                              Text('client Address:',style: TextStyle(fontWeight: FontWeight.bold)),
-                            Text(
-                              document['client Address'],
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w400
-                              ),
+                    return Card(
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 5),
+                        padding: const EdgeInsets.all(20),
+                        height: MediaQuery.of(context).size.height/2,
+                        color: Colors.white70,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(timeago.format(document['Done on the'].toDate())
                             ),
-                            ]
-                          ),
-                          const SizedBox(height: 21,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('client Tel:', style: TextStyle(fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 30,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text('Client Name:', style: TextStyle(fontWeight: FontWeight.bold),),
+                                  ],
+                                ),
+                                Text(
+                                  document['client Name'],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 15,),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children:[
+                                Text('client Address:',style: TextStyle(fontWeight: FontWeight.bold)),
                               Text(
-                                document['client Phone Number'].toString(),
+                                document['client Address'],
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w400
                                 ),
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 21,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const  Text('Duration:', style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
-                              Text(
-                                document['Duration'].toString(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400
+                              ]
+                            ),
+                            const SizedBox(height: 15,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('client Tel:', style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text(
+                                  document['client Phone Number'].toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 21,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('SN', style: TextStyle(fontWeight: FontWeight.bold)),
-                              Text(
-                                document['SN'],
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400
+                              ],
+                            ),
+                            const SizedBox(height: 15,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const  Text('Duration:', style: TextStyle(
+                                    fontWeight: FontWeight.bold)),
+                                Text(
+                                  document['Duration'].toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400
+                                  ),
                                 ),
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 21,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const   Text('Transaction made By ;', style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
-                              Text(
-                                document['sellers'].toString(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400
+                              ],
+                            ),
+                            const SizedBox(height: 15,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('SN', style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text(
+                                  document['SN'],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 10,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const   Text('Transaction made By ;', style: TextStyle(
+                                    fontWeight: FontWeight.bold)),
+                                Text(
+                                  document['sellers'].toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ) ;
                   }

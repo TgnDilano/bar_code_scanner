@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+// unused code
 class CirclePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

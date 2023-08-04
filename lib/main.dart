@@ -1,6 +1,7 @@
 import 'package:bar_code_scanner/pages/add_tpe.dart';
 import 'package:bar_code_scanner/pages/find_history.dart';
 import 'package:bar_code_scanner/pages/history.dart';
+import 'package:bar_code_scanner/pages/history_screens.dart';
 import 'package:bar_code_scanner/pages/remove_tpe.dart';
 import 'package:flutter/material.dart';
 import 'package:bar_code_scanner/pages/home.dart';
@@ -38,7 +39,7 @@ class _MyApp2State extends State<MyApp2> {
   final screens = [
     Home(),
     FindHistory(),
-    History()
+    history_screens()
 
   ];
   @override

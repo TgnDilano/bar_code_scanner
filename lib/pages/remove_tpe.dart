@@ -50,6 +50,7 @@ class _RemoveTpeState extends State<RemoveTpe> {
                   'Duration' : duration,
                   'sellers': sellers,
                   'SN': _scanBarcodeResult,
+                  'Done on the' : Timestamp.now()
                 }
                 ).whenComplete(() =>
                     Get.snackbar("success", "Added to outStock successfully",

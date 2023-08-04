@@ -16,11 +16,6 @@ class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
 }
-bool _iconBool = false;
-
-IconData _iconLight = Icons.wb_sunny;
-IconData _iconDark = Icons.nights_stay;
-
 
 class _HomeState extends State<Home> {
 
@@ -36,63 +31,6 @@ class _HomeState extends State<Home> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     Container(
-                //       height: MediaQuery.of(context).size.height/3,
-                //       width: MediaQuery.of(context).size.width/1,
-                //       child: CustomPaint(
-                //         size: const Size(10,10),
-                //         painter:  CirclePainter(),
-                //         child: Column(
-                //           children: [
-                //             Row(
-                //               mainAxisAlignment: MainAxisAlignment.end,
-                //               children: [
-                //                 IconButton(
-                //                     onPressed: (){
-                //                       setState(() {
-                //                         _iconBool = !_iconBool;
-                //                       });
-                //                     },
-                //                     icon: Icon(_iconBool ? _iconDark : _iconLight)
-                //                 )
-                //               ],
-                //             ),
-                //             SizedBox(height: 10,),
-                //             Padding(
-                //               padding: const EdgeInsets.all(8.0),
-                //               child: CarouselSlider.builder(
-                //                   itemCount: assetsImages.length,
-                //                 options: CarouselOptions(
-                //                   height: MediaQuery.of(context).size.height/5,
-                //                     autoPlay: true,
-                //                   reverse: true,
-                //                  viewportFraction: 2,
-                //                   enlargeCenterPage: true,
-                //                   enlargeStrategy: CenterPageEnlargeStrategy.height,
-                //                   autoPlayInterval: Duration(seconds: 2),
-                //                   onPageChanged: (index,reasons) =>
-                //                       setState(() => activeIndex = index)
-                //                 ),
-                //                 itemBuilder: (context, index, realIndex){
-                //                     final assetsImage = assetsImages[index];
-                //
-                //                     return buildImages(assetsImage, index);
-                //                 },
-                //               ),
-                //             ),
-                //             // SizedBox(height: 30,),
-                //             buildIndicator()
-                //           ],
-                //         )
-                //       ),
-                //     ),
-                //     const SizedBox(height:5),
-                //   ],
-                // ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -149,43 +87,5 @@ class _HomeState extends State<Home> {
           ),
       ),
     );
-  }
-  // Widget buildImages(String assetsImage, int index) => Container(
-  //     color: Colors.grey,
-  //   child: Image.asset(
-  //     assetsImage,
-  //     fit: BoxFit.cover,
-  //   ),
-  // );
-
-  // Widget buildIndicator() => AnimatedSmoothIndicator(
-  //   activeIndex: activeIndex,
-  //   count : assetsImages.length,
-  //   effect:const  SlideEffect(
-  //     dotWidth: 15,
-  //     dotHeight: 15,
-  //     activeDotColor: Colors.white,
-  //     dotColor: Colors.white70
-  //   ),
-  // );
-}
-
-
-
-class CirclePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint()
-      ..color = Colors.green
-      ..strokeWidth = 15;
-
-    Offset center = Offset(size.width / 2, size.height / 2);
-
-    canvas.drawRect(Rect.fromCenter(center: center, width: 500, height: 370),paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
   }
 }
