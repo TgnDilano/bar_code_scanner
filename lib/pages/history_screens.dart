@@ -1,5 +1,5 @@
 import 'package:bar_code_scanner/pages/remove_tpe.dart';
-import 'package:bar_code_scanner/pages/history.dart';
+import 'package:bar_code_scanner/pages/withdrawer_history.dart';
 import 'package:bar_code_scanner/pages/stock_history.dart';
 import 'package:flutter/material.dart';
 

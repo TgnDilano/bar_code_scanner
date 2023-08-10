@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:bar_code_scanner/pages/add_tpe.dart';
@@ -17,10 +18,10 @@ class RemoveTpe extends StatefulWidget {
 
 class _RemoveTpeState extends State<RemoveTpe> {
   // CollectionReference outStock= FirebaseFirestore.instance.collection('outStock');
-
+ bool isLoading = false;
   //creating a snackbar to display a message to the user
   var error = const SnackBar(content: Text('please scan the Bar code '));
-  var exist = const SnackBar(content: Text('Sorry, but this device has being withdraw already please Withdraw a new device'));
+  var doesNotExist = const SnackBar(content: Text('Sorry, but this device does not exist'));
 
 
   // creating controllers to store value from the TextFieldForm
@@ -66,30 +67,51 @@ class _RemoveTpeState extends State<RemoveTpe> {
 
               // function that run when the button is clicked
               Future removeTpe() async {
-                outStock(
-                  _NameController.text.trim(),
-                  int.parse(_NumberController.text.trim()),
-                  _AddressController.text.trim(),
-                  _durationController.text.trim(),
-                  _sellerController.text.trim(),
-                  Get.to(() => const RemoveTpe(), transition: Transition.fade),
-                );
-                final QuerySnapshot rs;
-                rs = await FirebaseFirestore.instance.collection('Stock').where('Top IMEI', isEqualTo: _scanBarcodeResult).get();
-                rs.docs.forEach((doc) {
-                  doc.reference.delete();
-                });
-                // final List < DocumentSnapshot > documents = rs.docs;
-                  setState(() {
-
-                    _NameController.clear();
-                    _AddressController.clear();
-                    _NumberController.clear();
-                    _durationController.clear();
-                    _sellerController.clear();
-                    _scanBarcodeResult = " ";
-                  });
-              }
+                EasyLoading.show(status: 'please wait...');
+                if(_scanBarcodeResult == " ") {
+                  // EasyLoading.show(status: 'please wait...');
+                  EasyLoading.showError('please Scan the Bar code');
+                  EasyLoading.dismiss();
+                } else {
+                  final QuerySnapshot ifExist;
+                  ifExist =
+                  await FirebaseFirestore.instance.collection('Stock').where(
+                      'SN', isEqualTo: _scanBarcodeResult).get();
+                  final List <DocumentSnapshot> documents = ifExist.docs;
+                  if (documents.isEmpty) {
+                    EasyLoading.show(status: 'please wait...');
+                    EasyLoading.showError('Sorry, but this device does not exist');
+                    EasyLoading.dismiss();
+                  } else {
+                    outStock(
+                      _NameController.text.trim(),
+                      int.parse(_NumberController.text.trim()),
+                      _AddressController.text.trim(),
+                      _durationController.text.trim(),
+                      _sellerController.text.trim(),
+                      Get.to(() => const RemoveTpe(),
+                          transition: Transition.fade),
+                    );
+                    final QuerySnapshot rs;
+                    rs =
+                    await FirebaseFirestore.instance.collection('Stock').where(
+                        'SN', isEqualTo: _scanBarcodeResult).get();
+                    rs.docs.forEach((doc) {
+                      doc.reference.delete();
+                    });
+                    setState(() {
+                      _NameController.clear();
+                      _AddressController.clear();
+                      _NumberController.clear();
+                      _durationController.clear();
+                      _sellerController.clear();
+                      _scanBarcodeResult = " ";
+                    });
+                    EasyLoading.showSuccess('Done');
+                    EasyLoading.dismiss();
+                  }
+                }
+                 }
 
               //creating the scan Barcode Function
               String _scanBarcodeResult = " ";
@@ -310,7 +332,7 @@ class _RemoveTpeState extends State<RemoveTpe> {
                                             borderRadius: BorderRadius.circular(40),
                                             side: const BorderSide(color: Colors.green, width: 2)
                                         ),
-                                        child: const Text(
+                                        child: isLoading?const  CircularProgressIndicator(color:Colors.green,) : const Text(
                                           "Withdraw", style: TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 22,

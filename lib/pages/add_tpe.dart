@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class AddTpe extends StatefulWidget {
   const AddTpe({super.key});
@@ -11,6 +14,7 @@ class AddTpe extends StatefulWidget {
 }
 
 class _AddTpeState extends State<AddTpe> {
+
 
 
   var success = const  SnackBar(content: Text('TPE added successfully'));
@@ -23,23 +27,33 @@ class _AddTpeState extends State<AddTpe> {
 
  // this function check if the device exist , ifNotExist it add a new device to stock
  AddTpe() async {
-final QuerySnapshot rs;
-   rs = await FirebaseFirestore.instance.collection('Stock').where('SN', isEqualTo: _scanBarcodeResult).get();
-final List < DocumentSnapshot > documents = rs.docs;
-if(_scanBarcodeResult == " "){
-  ScaffoldMessenger.of(context).showSnackBar(error);
-}
-if( documents.isEmpty){
-  setState(() async {
-    await Stock.add({ 'SN':_scanBarcodeResult, 'Done': Timestamp.now() })
-        .then((value) =>  ScaffoldMessenger.of(context).showSnackBar(success));
-    _scanBarcodeResult = "";
-  });
-
-} else {
-  ScaffoldMessenger.of(context).showSnackBar(exist);
-}
+   EasyLoading.show(status: 'loading...');
+   if(_scanBarcodeResult == " "){
+     // EasyLoading.show(status: 'please wait...');
+     EasyLoading.showError('please Scan the Bar code');
+     EasyLoading.dismiss();
+   } else {
+     final QuerySnapshot rs;
+     rs = await FirebaseFirestore.instance.collection('Stock').where(
+         'SN', isEqualTo: _scanBarcodeResult).get();
+     final List <DocumentSnapshot> documents = rs.docs;
+     if (documents.isNotEmpty) {
+       // EasyLoading.show(status: 'please wait...');
+       EasyLoading.showError('sorry, this devise exist already');
+       EasyLoading.dismiss();
+       // ScaffoldMessenger.of(context).showSnackBar(exist);
+     }
+     else {
+         await Stock.add({ 'SN': _scanBarcodeResult, 'Done': Timestamp.now()});
+         setState(() {
+           _scanBarcodeResult = " ";
+         });
+         EasyLoading.showSuccess('Added successfully!');
+         EasyLoading.dismiss();
+     }
+   }
  }
+
 
   //creating the scan Barcode Function
   String  _scanBarcodeResult = " ";
@@ -145,4 +159,17 @@ if( documents.isEmpty){
       ),
     );
   }
+} class Scanner extends StatefulWidget {
+  const Scanner({super.key});
+
+  @override
+  State<Scanner> createState() => _ScannerState();
 }
+
+class _ScannerState extends State<Scanner> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+

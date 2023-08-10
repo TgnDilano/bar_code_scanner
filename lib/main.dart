@@ -1,11 +1,14 @@
+import 'dart:async';
+
 import 'package:bar_code_scanner/pages/add_tpe.dart';
 import 'package:bar_code_scanner/pages/find_history.dart';
-import 'package:bar_code_scanner/pages/history.dart';
+import 'package:bar_code_scanner/pages/withdrawer_history.dart';
 import 'package:bar_code_scanner/pages/history_screens.dart';
 import 'package:bar_code_scanner/pages/remove_tpe.dart';
 import 'package:flutter/material.dart';
 import 'package:bar_code_scanner/pages/home.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp( const MyApp());
+  configLoading();
 }
 
 class MyApp extends StatelessWidget {
@@ -20,11 +24,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return  GetMaterialApp(
       home: MyApp2(),
+      builder: EasyLoading.init(),
     );
   }
 }
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.yellow
+    ..backgroundColor = Colors.green
+    ..indicatorColor = Colors.yellow
+    ..textColor = Colors.yellow
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = true
+    ..dismissOnTap = false;
+    // ..customAnimation = CustomAnimation();
+}
+
 
 
 class MyApp2 extends StatefulWidget {
@@ -35,11 +58,26 @@ class MyApp2 extends StatefulWidget {
 }
 
 class _MyApp2State extends State<MyApp2> {
+
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    EasyLoading.addStatusCallback((status) {
+      print('EasyLoading Status $status');
+      if (status == EasyLoadingStatus.dismiss) {
+        _timer?.cancel();
+      }
+    });
+    // EasyLoading.showSuccess('Use in initState');
+    // EasyLoading.removeCallbacks();
+  }
   int index = 0;
   final screens = [
-    Home(),
-    FindHistory(),
-    history_screens()
+   const Home(),
+   const FindHistory(),
+   const history_screens()
 
   ];
   @override
@@ -47,13 +85,13 @@ class _MyApp2State extends State<MyApp2> {
     return Scaffold(
       body : screens[index],
       bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0), ),
+        borderRadius: const BorderRadius.only(topLeft: Radius.circular(25.0), topRight: Radius.circular(30.0), ),
         child: NavigationBarTheme(
           data: NavigationBarThemeData(
             indicatorColor: Colors.white10,
-            iconTheme: MaterialStateProperty.all(IconThemeData(color: Colors.white)),
+            iconTheme: MaterialStateProperty.all(const IconThemeData(color: Colors.white)),
             labelTextStyle: MaterialStateProperty.all(
-              TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)
+             const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)
             ),
             backgroundColor: Colors.green.shade500,
           ),
@@ -64,8 +102,8 @@ class _MyApp2State extends State<MyApp2> {
                 setState(() {
                   this.index = index;
                 }),
-            destinations: [
-              NavigationDestination(
+            destinations: const [
+             NavigationDestination(
                   icon: Icon(Icons.home),
                   selectedIcon: Icon(Icons.home_filled),
                   label: 'Home'

@@ -62,7 +62,7 @@ class _FindHistoryState extends State<FindHistory> {
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 5),
                         padding: const EdgeInsets.all(20),
-                        height:  MediaQuery.of(context).size.height/2,
+                        height:  200,
                         color: Colors.white70,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +80,7 @@ class _FindHistoryState extends State<FindHistory> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 21,),
+                            const SizedBox(height: 10,),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -94,7 +94,7 @@ class _FindHistoryState extends State<FindHistory> {
                                   ),
                                 ]
                             ),
-                            const SizedBox(height: 21,),
+                            const SizedBox(height: 10,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -108,7 +108,7 @@ class _FindHistoryState extends State<FindHistory> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 21,),
+                            const SizedBox(height: 10,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -122,7 +122,7 @@ class _FindHistoryState extends State<FindHistory> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 21,),
+                            const SizedBox(height: 10,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -136,7 +136,7 @@ class _FindHistoryState extends State<FindHistory> {
                                 )
                               ],
                             ),
-                            const SizedBox(height: 21,),
+                            const SizedBox(height: 10,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -177,7 +177,7 @@ class _FindHistoryState extends State<FindHistory> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 21,),
+                          const SizedBox(height: 10,),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -191,7 +191,7 @@ class _FindHistoryState extends State<FindHistory> {
                                 ),
                               ]
                           ),
-                          const SizedBox(height: 21,),
+                          const SizedBox(height: 10,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -205,7 +205,7 @@ class _FindHistoryState extends State<FindHistory> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 21,),
+                          const SizedBox(height: 10,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -219,7 +219,7 @@ class _FindHistoryState extends State<FindHistory> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 21,),
+                          const SizedBox(height: 20,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -233,7 +233,7 @@ class _FindHistoryState extends State<FindHistory> {
                               )
                             ],
                           ),
-                          const SizedBox(height: 21,),
+                          const SizedBox(height: 10,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

@@ -1,6 +1,9 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 
 
@@ -41,11 +44,12 @@ class _HistoryState extends State<History> {
                 itemCount:listQueryDocumentSnapshots.length ,
                   itemBuilder:(context, index){
                     QueryDocumentSnapshot document = listQueryDocumentSnapshots[index];
+                     // documents = listQueryDocumentSnapshots[index];
                     return Card(
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 5),
                         padding: const EdgeInsets.all(20),
-                        height: MediaQuery.of(context).size.height/2,
+                        height: 290,
                         color: Colors.white70,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +60,7 @@ class _HistoryState extends State<History> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
+                               const Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text('Client Name:', style: TextStyle(fontWeight: FontWeight.bold),),
@@ -137,6 +141,7 @@ class _HistoryState extends State<History> {
                                 ),
                               ],
                             ),
+                            const SizedBox(height: 20,),
                           ],
                         ),
                       ),
